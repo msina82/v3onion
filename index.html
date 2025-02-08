@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding v3 .onion Domains</title>
+    <style>
+        :root {
+            --primary: #7952b3;
+            --secondary: #61428f;
+            --background: #f8f9fa;
+            --text: #212529;
+            --code-bg: #2d2d2d;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background: var(--background);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        header {
+            background: var(--primary);
+            color: white;
+            padding: 3rem 0;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        h1, h2, h3 {
+            color: var(--primary);
+            margin: 1.5rem 0 1rem 0;
+        }
+
+        header h1 {
+            color: white;
+            margin: 0;
+        }
+
+        .intro {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
+        pre {
+            background: var(--code-bg);
+            color: #fff;
+            padding: 1rem;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+
+        .onion-example {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            padding: 1rem;
+            border-radius: 6px;
+            font-family: monospace;
+            word-break: break-all;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+
+        th, td {
+            padding: 0.75rem;
+            border: 1px solid #dee2e6;
+        }
+
+        th {
+            background: var(--primary);
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .feature-list li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .feature-list li::before {
+            content: "•";
+            color: var(--primary);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        .steps {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin: 1rem 0;
+        }
+
+        .steps ol {
+            padding-left: 1.5rem;
+        }
+
+        .steps li {
+            margin: 1rem 0;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Understanding v3 .onion Domains in the Tor Network</h1>
+        </div>
+    </header>
+
+    <main class="container">
+        <p class="intro">
+            The Tor network is a crucial tool for ensuring online anonymity and privacy. One of its most significant features is the use of ".onion" domains, which are only accessible through the Tor browser.
+        </p>
+
+        <h2>What Are v3 .onion Domains?</h2>
+        <p>
+            v3 .onion domains are the latest version of hidden service addresses used within the Tor network. They provide enhanced security, longer cryptographic keys, and better resistance to attacks compared to their predecessor, v2 .onion domains.
+        </p>
+        
+        <div class="onion-example">
+            zqktlwiuavvvqqt4ybvgvi7tyo4hjl5xgfuvpdf6otjiycgwqbym2qad.onion
+        </div>
+
+        <h2>Differences Between v2 and v3 .onion Domains</h2>
+        <table>
+            <tr>
+                <th>Feature</th>
+                <th>v2 .onion Domains</th>
+                <th>v3 .onion Domains</th>
+            </tr>
+            <tr>
+                <td>Length</td>
+                <td>16 characters</td>
+                <td>56 characters</td>
+            </tr>
+            <tr>
+                <td>Encryption</td>
+                <td>SHA1 + RSA1024</td>
+                <td>SHA3/ed25519 + Curve25519</td>
+            </tr>
+            <tr>
+                <td>Security</td>
+                <td>Vulnerable to attacks</td>
+                <td>Stronger cryptography</td>
+            </tr>
+            <tr>
+                <td>Deprecation</td>
+                <td>Unsupported after 2021</td>
+                <td>Fully supported</td>
+            </tr>
+        </table>
+
+        <h3>Major Improvements in v3</h3>
+        <ul class="feature-list">
+            <li>Better Cryptographic Security: Uses SHA3 for hashing, ed25519 for authentication, and Curve25519 for encryption.</li>
+            <li>Improved Resistance Against Enumeration Attacks: v3 domains are more resistant to attacks that try to discover hidden services.</li>
+            <li>Longer Address Space: This reduces the likelihood of domain collisions and spoofing attempts.</li>
+        </ul>
+
+        <h2>How to Generate a v3 .onion Domain</h2>
+        <div class="steps">
+            <ol>
+                <li>
+                    <strong>Install Tor:</strong>
+                    <pre>sudo apt update
+sudo apt install tor</pre>
+                </li>
+                <li>
+                    <strong>Configure Tor for a Hidden Service:</strong>
+                    <p>Edit the Tor configuration file (torrc):</p>
+                    <pre>sudo nano /etc/tor/torrc</pre>
+                    <p>Add the following lines:</p>
+                    <pre>HiddenServiceDir /var/lib/tor/hidden_service/
+HiddenServicePort 80 127.0.0.1:8080</pre>
+                </li>
+                <li>
+                    <strong>Restart Tor:</strong>
+                    <pre>sudo systemctl restart tor</pre>
+                </li>
+                <li>
+                    <strong>Find Your v3 .onion Address:</strong>
+                    <pre>sudo cat /var/lib/tor/hidden_service/hostname</pre>
+                </li>
+            </ol>
+        </div>
+
+        <h2>Why v3 .onion Domains Matter</h2>
+        <p>
+            The transition to v3 .onion domains is a necessary step to maintain security and privacy within the Tor network. Users and service providers should migrate to v3 domains to ensure their communications remain secure. Since v2 domains were deprecated in October 2021, any existing services using them are no longer supported by the Tor Project.
+        </p>
+
+        <h2>Conclusion</h2>
+        <p>
+            v3 .onion domains provide a more secure and reliable method for hosting hidden services on the Tor network. Their stronger cryptographic foundations and improved privacy protections make them the standard for modern anonymous web services. Users and administrators should ensure they transition fully to v3 to avoid security vulnerabilities and maintain access to hidden services within Tor.
+        </p>
+    </main>
+</body>
+</html>
